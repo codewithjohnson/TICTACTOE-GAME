@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TICTACTOE GAME</title>
+  <link rel="stylesheet" href="./styles/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="./styles/style.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="title-start-container">
+      <h2 class="title mb-4 text-center">WELCOME TO THE GAME OF TICTACTOE !</h2>
+      <button type="submit" class="start-btn css-button-sliding-to-left--black mb-3">Start game</button>
+
+      <div class="turn mb-5 text-center"></div>
+
+      <div class="board d-none">
+        <div class="col x"></div>
+        <div class="col x"></div>
+        <div class="col x"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+
+      <div class="inform d-none text-black mt-4">
+        <div class="player-x text-center ">
+          PLAYER X <br>
+          <p class="player-x-count">0</p>
+        </div>
+
+        <div class="player-o text-center">
+          PLAYER O <br>
+          <p class="player-o-count">0</p>
+        </div>
+      </div>
+
+
+      <div class="restart-container d-none">
+        <h2 class="end-title mb-4 text-center"> GAME OVER! PLAYER <span class="winner"> </span> WINS</h2>
+        <button type="submit" class="restart-btn css-button-sliding-to-left--black mb-3">Restart game</button>
+    </div>
+  </div>
+
+  <script src="./scripts/index.js"></script>
+  <script src="./scripts/test.js"></script>
+  <script src="./scripts/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+
+</html>
