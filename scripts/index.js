@@ -15,8 +15,6 @@ const restartBtn = document.querySelector('.restart-btn');
 
 const winner = document.querySelector('.winner');
 
-
-
 let player_x = 'X';
 let player_o = 'O';
 
@@ -41,7 +39,6 @@ function game() {
 function HideTitleAndStartBtn() {
     title.hidden = 'true';
     startBtn.hidden = true;
-    // restartContainer.hidden = true;
 }
 
 
@@ -84,11 +81,15 @@ function displayTurn(current_player) {
 }
 
 
-function endGame() {
-    turn.classList.add('d-none');
-    BOARD.classList.add('d-none');
-    countContainer.classList.add('d-none');
-    restartContainer.classList.remove('d-none');
+function endGame(a, b, c) {
+    changeBg(a, b, c);
+    setTimeout(() => {
+        turn.classList.add('d-none');
+        BOARD.classList.add('d-none');
+        countContainer.classList.add('d-none');
+        restartContainer.classList.remove('d-none');
+    }, 1000);
+
 }
 
 function winMessage(current_player) {
@@ -104,6 +105,34 @@ function playGame() {
 }
 
 
+function restartGame() {
+    restartBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        container.innerHTML = "";
+        location.reload();
+        game();
+    });
+}
+
+
+function changeBg(a, b, c) {
+    const winColor = 'yellow';
+    const winBg = 'rgba(0, 0, 0, 0.80)';
+    const fontWeight = 'bolder';
+
+    a.style.backgroundColor = winBg;
+    a.style.color = winColor;
+    a.style.fontWeight = fontWeight;
+
+    b.style.backgroundColor = winBg;
+    b.style.color = winColor;
+    b.style.fontWeight = fontWeight;
+
+    c.style.backgroundColor = winBg;
+    c.style.color = winColor;
+    c.style.fontWeight = fontWeight;
+}
+
 
 function checkWinner() {
     let use = [];
@@ -118,38 +147,38 @@ function checkWinner() {
 
     // ROW CHECK FOR WINNER
     if (board_1 === current_player && board_2 === current_player && board_3 === current_player) {
-        console.log(a, b, c);
-        changeBg();
-        endGame();
+        endGame(a, b, c);
         winMessage(current_player);
 
     } else if (board_4 === current_player && board_5 === current_player && board_6 === current_player) {
-        endGame();
+        endGame(d, e, f);
         winMessage(current_player);
     } else if (board_7 === current_player && board_8 === current_player && board_9 === current_player) {
-        endGame();
+        endGame(g, h, i);
         winMessage(current_player);
     }
 
     // COLUMN CHECK FOR WINNER 
     else if (board_1 === current_player && board_4 === current_player && board_7 === current_player) {
-        endGame();
+        endGame(a, d, g);
         winMessage(current_player);
+
     } else if (board_2 === current_player && board_5 === current_player && board_8 === current_player) {
-        endGame();
+        endGame(b, e, h);
         winMessage(current_player);
+
     } else if (board_3 === current_player && board_6 === current_player && board_9 === current_player) {
-        endGame();
+        endGame(c, f, i);
         winMessage(current_player);
     }
 
     // DIAGONAL CHECK FOR WINNER
     else if (board_1 === current_player && board_5 === current_player && board_9 === current_player) {
-        endGame();
-        console.log('DIAGONAL1 wins');
+        endGame(a, e, i);
+
     } else if (board_3 === current_player && board_5 === current_player && board_7 === current_player) {
-        endGame();
-        console.log('DIAGONAL2 wins');
+        endGame(c, e, g);
+
     }
 
     // DRAW CHECK 
@@ -157,26 +186,6 @@ function checkWinner() {
         console.log('DRAW');
     }
 }
-
-
-function restartGame() {
-    restartBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        container.innerHTML = "";
-        location.reload();
-        game();
-    });
-}
-
-function changeBg() {
-    setTimeout(() => {
-        a.style.backgroundColor = 'black';
-        b.style.backgroundColor = 'black';
-        c.style.backgroundColor = 'black';
-    }, 1000);
-
-}
-
 
 
 StartGame();
