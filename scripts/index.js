@@ -40,6 +40,7 @@ function game() {
 function HideTitleAndStartBtn() {
     title.hidden = 'true';
     startBtn.hidden = true;
+    turnWin.hidden = true;
 }
 
 
@@ -85,6 +86,7 @@ function displayTurn(current_player) {
 
 function endGame(a, b, c) {
     turn.classList.add('d-none');
+    turnWin.hidden = false;
     changeBg(a, b, c);
     setTimeout(() => {
         turnWin.classList.add('d-none');
