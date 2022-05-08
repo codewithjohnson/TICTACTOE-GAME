@@ -24,7 +24,7 @@ h2 {
     "Lucida Sans", Arial, sans-serif;
 }
 
-.turn {
+.turn,.turn-win{
   font-size: 30px;
 }
 .board{
@@ -148,6 +148,3 @@ col.x{
   margin:20px;
 }
 
-.po{
-  color:rgba(0, 0, 0, 0.87);
-}

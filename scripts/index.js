@@ -5,6 +5,7 @@ const startBtn = document.querySelector('.start-btn');
 const playerTurnDisplay = document.querySelector('.turn');
 
 const turn = document.querySelector('.turn');
+const turnWin = document.querySelector('.turn-win');
 const playerXCount = document.querySelector('.player-x-count');
 const playerOCount = document.querySelector('.player-o-count');
 const countContainer = document.querySelector('.inform');
@@ -81,21 +82,24 @@ function displayTurn(current_player) {
 }
 
 
+
 function endGame(a, b, c) {
+    turn.classList.add('d-none');
     changeBg(a, b, c);
     setTimeout(() => {
-        turn.classList.add('d-none');
+        turnWin.classList.add('d-none');
         BOARD.classList.add('d-none');
         countContainer.classList.add('d-none');
         restartContainer.classList.remove('d-none');
-    }, 1000);
+    }, 2000);
 
 }
 
 function winMessage(current_player) {
     winner.textContent = current_player;
+    turnWin.innerHTML = `PLAYER ${current_player} WINS!!`;
+   
 }
-
 
 function playGame() {
     BOARD.addEventListener('click', (e) => {
