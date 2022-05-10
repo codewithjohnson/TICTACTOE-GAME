@@ -1,20 +1,14 @@
-const container = document.querySelector('.container');
-const BOARD = document.querySelector('.board');
 const title = document.querySelector('.title');
 const startBtn = document.querySelector('.start-btn');
 const playerTurnDisplay = document.querySelector('.turn');
-
-const turn = document.querySelector('.turn');
 const turnWin = document.querySelector('.turn-win');
+const BOARD = document.querySelector('.board');
+const countContainer = document.querySelector('.inform');
 const playerXCount = document.querySelector('.player-x-count');
 const playerOCount = document.querySelector('.player-o-count');
-const countContainer = document.querySelector('.inform');
-
 const restartContainer = document.querySelector('.restart-container');
-const endTitle = document.querySelector('.end-title ');
 const restartBtn = document.querySelector('.restart-btn');
-
-const winner = document.querySelector('.winner');
+startBtn.addEventListener('click', gameState);
 
 let player_x = 'X';
 let player_o = 'O';
@@ -23,51 +17,93 @@ let current_player = player_x;
 let count_X = 0;
 let count_O = 0;
 
-function StartGame() {
-    startBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        game();
-    });
-}
 
-function game() {
-    displayBoard();
-    HideTitleAndStartBtn();
-    displayTurn(current_player);
+
+
+function gameState() {
+    DisplayGameView();
     playGame();
+
 }
 
-function HideTitleAndStartBtn() {
-    title.hidden = 'true';
-    startBtn.hidden = true;
-    turnWin.hidden = true;
+
+function DisplayGameView() {
+    // display BOARD
+    displayBoard();
+
+    // hide TITLE
+    HideTitle();
+
+    // hide START BTN
+    hideStartBtn();
+
+    // display TURNS
+    displayTurns();
+
+    // hide WIN MESSAGE CONTAINER
+    HideWinMessage();
+
+    // hide WIN MESSAGE
 }
 
 
 function displayBoard() {
     BOARD.classList.remove('d-none');
+}
+
+function HideBoard() {
+    BOARD.classList.add('d-none');
+}
+
+
+
+function displayTitle() {
+    title.classList.remove('d-none');
+}
+
+function HideTitle() {
+    title.classList.add('d-none');
+}
+
+
+
+function displayStartBtn() {
+    startBtn.classList.remove('d-none');
+}
+
+function hideStartBtn() {
+    startBtn.classList.add('d-none');
+}
+
+
+function displayTurns() {
+    playerTurnDisplay.innerHTML = `Player ${current_player}'s Turn`;
+}
+
+function hideTurns() {
+    playerTurnDisplay.classList.add('d-none');
+}
+
+
+function displayWinMessage() {
+    turnWin.classList.remove('d-none');
+    turnWin.innerHTML = `PLAYER ${current_player} WINS!!`;
+}
+
+function HideWinMessage() {
+    turnWin.classList.add('d-none');
+}
+
+function displayRestartBtn(){
+    restartContainer.classList.remove('d-none');
+}
+function HideRestartBtn(){
+    restartContainer.classList.add('d-none');
+}
+
+
+function displayTurnCountContainer() {
     countContainer.classList.remove('d-none');
-}
-
-
-function enterPlayerPosition(boardTile) {
-    if (boardTile.textContent !== player_x && boardTile.textContent !== player_o && boardTile.textContent === '') {
-        boardTile.textContent = current_player;
-        displayCounts(current_player);
-        checkWinner();
-        nextTurn();
-        displayTurn(current_player);
-    } else {}
-}
-
-
-function nextTurn() {
-    current_player = current_player === player_x ? player_o : player_x;
-
-}
-
-
-function displayCounts(current_player) {
     if (current_player == player_x) {
         count_X += 1;
         playerXCount.textContent = count_X;
@@ -77,47 +113,91 @@ function displayCounts(current_player) {
     }
 }
 
-
-function displayTurn(current_player) {
-    playerTurnDisplay.innerHTML = `Player ${current_player}'s Turn`;
+function hideTurnCountContainer() {
+    countContainer.classList.add('d-none');
 }
 
 
 
-function endGame(a, b, c) {
-    turn.classList.add('d-none');
-    turnWin.hidden = false;
-    changeBg(a, b, c);
-    setTimeout(() => {
-        turnWin.classList.add('d-none');
-        BOARD.classList.add('d-none');
-        countContainer.classList.add('d-none');
-        restartContainer.classList.remove('d-none');
-    }, 2000);
 
-}
 
-function winMessage(current_player) {
-    winner.textContent = current_player;
-    turnWin.innerHTML = `PLAYER ${current_player} WINS!!`;
-   
-}
-
+// PLAY GAME STATE
 function playGame() {
-    BOARD.addEventListener('click', (e) => {
-        let boardTile = e.target;
-        enterPlayerPosition(boardTile);
-    });
+    BOARD.addEventListener('click', gameOn);
 }
 
 
-function restartGame() {
-    restartBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        container.innerHTML = "";
-        location.reload();
-        game();
+function gameOn(ev) {
+    let boardTile = ev.target;
+    enterPlayerPosition(boardTile, current_player);
+}
+
+
+function enterPlayerPosition(boardTile, current_player) {
+    if (boardTile.textContent !== player_x && boardTile.textContent !== player_o && boardTile.textContent === '') {
+        boardTile.textContent = current_player;
+        displayTurnCountContainer();
+        checkWinner();
+        nextTurn();
+        displayTurns();
+    }
+}
+
+
+function nextTurn() {
+    current_player = current_player === player_x ? player_o : player_x;
+}
+
+
+function checkWinner() {
+    let boardContents = [];
+    let boards = [];
+    const tiles = document.querySelectorAll('.col');
+    tiles.forEach((each) => {
+        boardContents.push(each.textContent);
+        boards.push(each);
+
+        [board_1, board_2, board_3, board_4, board_5, board_6, board_7, board_8, board_9] = boardContents;
+       
+        [board_a, board_b, board_c, board_d, board_e, board_f, board_g, board_h, board_i] = boards;
     });
+    
+    // ROW CHECK FOR WINNER
+    if (board_1 === current_player && board_2 === current_player && board_3 === current_player) {
+        gameOver(board_a,board_b,board_c);
+    } 
+    else if (board_4 === current_player && board_5 === current_player && board_6 === current_player) {
+        gameOver(board_d,board_e,board_f);
+    } 
+    else if (board_7 === current_player && board_8 === current_player && board_9 === current_player) {
+        gameOver(board_g,board_h,board_i);
+    }
+
+
+    // COLUMN CHECK FOR WINNER 
+    else if (board_1 === current_player && board_4 === current_player && board_7 === current_player) {
+        gameOver(board_a,board_d,board_g);
+    } 
+    else if (board_2 === current_player && board_5 === current_player && board_8 === current_player) {
+        gameOver(board_b,board_e,board_h);
+    } 
+    else if (board_3 === current_player && board_6 === current_player && board_9 === current_player) {
+        gameOver(board_c,board_f,board_i);
+    }
+
+
+    // DIAGONAL CHECK FOR WINNER
+    else if (board_1 === current_player && board_5 === current_player && board_9 === current_player) {
+        gameOver(board_a,board_e,board_i);
+    } else if (board_3 === current_player && board_5 === current_player && board_7 === current_player) {
+        gameOver(board_c,board_e,board_g);
+    }
+
+    // DRAW CHECK 
+    else if (board_1 != '' && board_2 != '' && board_3 != '' && board_4 && board_5 != '' && board_6 != '' && board_7 != '' && board_8 != '' && board_9 != '') {
+        gameDrawHandler();
+
+    }
 }
 
 
@@ -140,59 +220,46 @@ function changeBg(a, b, c) {
 }
 
 
-function checkWinner() {
-    let use = [];
-    let use2 = [];
-    const tiles = document.querySelectorAll('.col');
-    tiles.forEach((each) => {
-        use2.push(each);
-        use.push(each.textContent);
-        [board_1, board_2, board_3, board_4, board_5, board_6, board_7, board_8, board_9] = use;
-        [a, b, c, d, e, f, g, h, i] = use2;
-    });
+function gameOver(a,b,c) {
+    BOARD.removeEventListener('click', gameOn);
 
-    // ROW CHECK FOR WINNER
-    if (board_1 === current_player && board_2 === current_player && board_3 === current_player) {
-        endGame(a, b, c);
-        winMessage(current_player);
+    // DISPLAY WINNER
+    displayWinMessage();
 
-    } else if (board_4 === current_player && board_5 === current_player && board_6 === current_player) {
-        endGame(d, e, f);
-        winMessage(current_player);
-    } else if (board_7 === current_player && board_8 === current_player && board_9 === current_player) {
-        endGame(g, h, i);
-        winMessage(current_player);
-    }
+    // CHANGE WIN BOARD BACKGROUND
+    changeBg(a, b, c);
 
-    // COLUMN CHECK FOR WINNER 
-    else if (board_1 === current_player && board_4 === current_player && board_7 === current_player) {
-        endGame(a, d, g);
-        winMessage(current_player);
+    // HIDE TURN DISPLAY
+    hideTurns();
 
-    } else if (board_2 === current_player && board_5 === current_player && board_8 === current_player) {
-        endGame(b, e, h);
-        winMessage(current_player);
+    // HIDE TURN COUNTS
+    hideTurnCountContainer();
 
-    } else if (board_3 === current_player && board_6 === current_player && board_9 === current_player) {
-        endGame(c, f, i);
-        winMessage(current_player);
-    }
-
-    // DIAGONAL CHECK FOR WINNER
-    else if (board_1 === current_player && board_5 === current_player && board_9 === current_player) {
-        endGame(a, e, i);
-
-    } else if (board_3 === current_player && board_5 === current_player && board_7 === current_player) {
-        endGame(c, e, g);
-
-    }
-
-    // DRAW CHECK 
-    else if (board_1 != '' && board_2 != '' && board_3 != '' && board_4 && board_5 != '' && board_6 != '' && board_7 != '' && board_8 != '' && board_9 != '') {
-        console.log('DRAW');
-    }
+    restartGame();
 }
 
 
-StartGame();
-restartGame();
+function restartGame() {
+    // SHOW RESTART Button
+    displayRestartBtn();
+
+    //  RELOAD PAGE
+    restartBtn.addEventListener("click",()=>{
+        location.reload();
+    });
+}
+
+
+function gameDrawHandler() {
+    BOARD.removeEventListener('click', gameOn);
+    drawMessage();
+    hideTurns();
+    hideTurnCountContainer();
+    restartGame();
+   
+}
+
+function drawMessage() {
+    turnWin.classList.remove('d-none');
+    turnWin.innerHTML = `NO WINNER !!`;
+}
