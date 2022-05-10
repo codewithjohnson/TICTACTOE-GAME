@@ -22,6 +22,10 @@ body {
   color: rgb(219, 210, 210);
 }
 
+.title-start-container{
+  margin-top: -90px;
+}
+
 h2 {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
